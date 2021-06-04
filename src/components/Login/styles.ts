@@ -77,7 +77,7 @@ export const FormLoginStyle = styled.form`
     border-radius: 0.5rem;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
-    padding: 0.8rem 3.5rem;
+    padding: 0.5rem 4rem;
     margin: 4rem;
 
     transition: filter 0.2s;

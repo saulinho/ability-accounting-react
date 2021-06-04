@@ -36,8 +36,7 @@ export const Container = styled.header`
     border-radius: 0.5rem;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
-    padding: 0.8rem 3.5rem;
-    /* margin: 4rem; */
+    padding: 0.5rem 4rem;
 
     transition: filter 0.2s;
 
