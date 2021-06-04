@@ -72,7 +72,7 @@ export const FormLoginStyle = styled.form`
     font-weight: 700;
     line-height: 2.5rem;
 
-    background: #1FCD64;
+    background: var(--green);
     border: 0;
     border-radius: 0.5rem;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -85,7 +85,6 @@ export const FormLoginStyle = styled.form`
     &:hover {
       filter: brightness(0.9);
     }
-
   }
 
 `
