@@ -27,7 +27,7 @@ export function InvoicesTable() {
               <td>001</td>
               <td>1.6549,00</td>
               <td>Stenio de Oliveira</td>
-              <td><a href="#"><img src={pdfImg} alt="PDF" /></a></td>
+              <td><a><img src={pdfImg} alt="PDF" /></a></td>
             </tr>
 
             <tr>
@@ -35,7 +35,7 @@ export function InvoicesTable() {
               <td>001</td>
               <td>1.6549,00</td>
               <td>Stenio de Oliveira</td>
-              <td><a href="#"><img src={pdfImg} alt="PDF" /></a></td>
+              <td><a><img src={pdfImg} alt="PDF" /></a></td>
             </tr>
 
             <tr>
@@ -43,7 +43,7 @@ export function InvoicesTable() {
               <td>001</td>
               <td>1.6549,00</td>
               <td>Stenio de Oliveira</td>
-              <td><a href="#"><img src={pdfImg} alt="PDF" /></a></td>
+              <td><a><img src={pdfImg} alt="PDF" /></a></td>
             </tr>
 
             <tr>
@@ -51,7 +51,7 @@ export function InvoicesTable() {
               <td>001</td>
               <td>1.6549,00</td>
               <td>Stenio de Oliveira</td>
-              <td><a href="#"><img src={pdfImg} alt="PDF" /></a></td>
+              <td><a><img src={pdfImg} alt="PDF" /></a></td>
             </tr>
 
             <tr>
@@ -59,14 +59,14 @@ export function InvoicesTable() {
               <td>001</td>
               <td>1.6549,00</td>
               <td>Stenio de Oliveira</td>
-              <td><a href="#"><img src={pdfImg} alt="PDF" /></a></td>
+              <td><a><img src={pdfImg} alt="PDF" /></a></td>
             </tr>
             <tr>
               <td>0015452</td>
               <td>001</td>
               <td>1.6549,00</td>
               <td>Stenio de Oliveira</td>
-              <td><a href="#"><img src={pdfImg} alt="PDF" /></a></td>
+              <td><a><img src={pdfImg} alt="PDF" /></a></td>
             </tr>
             
             <tr>
