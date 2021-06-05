@@ -1,25 +1,14 @@
-import { Footer } from "./components/Footer";
-import { HeaderLogged } from "./components/HeaderLogged";
-import { Header } from "./components/Header";
-import { Login } from "./components/Login";
 import { GlobalStyles } from "./styles/global";
-import { CustomersList } from "./components/CustomersList";
-import { InvoicesTable } from "./components/InvoicesTable";
+import { Routes } from "./routes";
+import { AuthProvider } from "./contexts/auth";
 
 function App() {
   return (
     <>
-      {/* <Header /> */}
-
-      <HeaderLogged />
-
-      {/* <Login /> */}
-
-      {/* <CustomersList /> */}
-
-      <InvoicesTable />
-
-      <Footer />
+    
+    <AuthProvider>
+      <Routes />
+    </AuthProvider>
 
       <GlobalStyles />
     </>
