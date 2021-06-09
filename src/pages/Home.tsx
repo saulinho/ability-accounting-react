@@ -1,18 +1,33 @@
-import { useContext } from "react";
+import { useHistory } from "react-router";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import { Login } from "../components/Login";
-import { AuthContext } from "../contexts/auth";
 
-export function Home() {
-  const context = useContext(AuthContext);
-  
-  console.log(context);
+interface LoginStatusProps {
+  loggedInStatus: string,
+  user: {}
+}
+
+interface HomeProps {
+  loggedInStatus: string,
+  handleLogout: () => void,
+  handleLogin: (data: LoginStatusProps) => void
+}
+
+export function Home(props: HomeProps) {
+
+  const history = useHistory();
+
+  function handleSuccessfulAuth(data: LoginStatusProps) {
+    props.handleLogin(data);
+    history.push('/accounting');
+  }
 
   return (
     <>
       <Header />
-      <Login/>
+      <Login handleSuccessfulAuth={handleSuccessfulAuth} />
+      <p>{props.loggedInStatus}</p>
       <Footer />
     </>
   );

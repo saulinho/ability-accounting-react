@@ -2,10 +2,19 @@ import { Footer } from "../components/Footer";
 import { HeaderLogged } from "../components/HeaderLogged";
 import { InvoicesTable } from "../components/InvoicesTable";
 
-export function Customer() {
+interface CustomerProps {
+  user: {} | {
+    name: string,
+    email: string,
+    accounting_id: number
+  }
+  handleLogout: () => void
+}
+
+export function Customer(props: CustomerProps) {
   return (
     <>
-      <HeaderLogged />
+      <HeaderLogged user={props.user} handleLogout={props.handleLogout}/>
       <InvoicesTable />
       <Footer />
     </>

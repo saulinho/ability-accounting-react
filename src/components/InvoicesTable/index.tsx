@@ -1,13 +1,60 @@
+import { useEffect, useState } from 'react';
+import { useHistory, useLocation } from 'react-router';
+import { api } from '../../services/api';
+
 import downloadImg from '../../assets/download.svg';
 import pdfImg from '../../assets/pdf.svg';
 
-import { Container, Content } from './styles'
+import { Container, Content } from './styles';
+
+interface CompanyProps {
+  name: string
+}
+
+interface InvoicesProps {
+  id: number,
+  number: number,
+  serie: string,
+  total_value: number,
+  customer: {
+    name: string,
+  }
+}
 
 export function InvoicesTable() {
 
+  function useQuery() {
+    return new URLSearchParams(useLocation().search)
+  }
+
+  const history = useHistory();
+
+  const query = useQuery();
+
+  const customer_id = query.get('id');
+  
+  const [invoices, setInvoices] = useState([]);
+  const [company, setCompany] = useState<CompanyProps>({} as CompanyProps);
+  
+
+  useEffect(() => {
+    async function getInvoices() {
+      await api
+        .get(`invoices?id=${customer_id}`)
+        .then(response => {
+          setCompany(response.data.company)
+          setInvoices(response.data.invoices)
+        })
+        .catch(err => {
+          history.push('/404');
+        })
+    }
+    getInvoices()
+  }, []);
+ 
   return (
     <Container>
-      <h1>NOTAS FISCAIS DE CLIENTE DA CONTABILIDADE</h1>
+      <h1>NOTAS FISCAIS DE {company.name ? company.name.toUpperCase(): ''}</h1>
 
       <Content>
         <table>
@@ -22,61 +69,15 @@ export function InvoicesTable() {
           </thead>
 
           <tbody>
-            <tr>
-              <td>0015452</td>
-              <td>001</td>
-              <td>1.6549,00</td>
-              <td>Stenio de Oliveira</td>
-              <td><a><img src={pdfImg} alt="PDF" /></a></td>
-            </tr>
-
-            <tr>
-              <td>0015452</td>
-              <td>001</td>
-              <td>1.6549,00</td>
-              <td>Stenio de Oliveira</td>
-              <td><a><img src={pdfImg} alt="PDF" /></a></td>
-            </tr>
-
-            <tr>
-              <td>0015452</td>
-              <td>001</td>
-              <td>1.6549,00</td>
-              <td>Stenio de Oliveira</td>
-              <td><a><img src={pdfImg} alt="PDF" /></a></td>
-            </tr>
-
-            <tr>
-              <td>0015452</td>
-              <td>001</td>
-              <td>1.6549,00</td>
-              <td>Stenio de Oliveira</td>
-              <td><a><img src={pdfImg} alt="PDF" /></a></td>
-            </tr>
-
-            <tr>
-              <td>0015452</td>
-              <td>001</td>
-              <td>1.6549,00</td>
-              <td>Stenio de Oliveira</td>
-              <td><a><img src={pdfImg} alt="PDF" /></a></td>
-            </tr>
-            <tr>
-              <td>0015452</td>
-              <td>001</td>
-              <td>1.6549,00</td>
-              <td>Stenio de Oliveira</td>
-              <td><a><img src={pdfImg} alt="PDF" /></a></td>
-            </tr>
-            
-            <tr>
-              <td>0015452</td>
-              <td>001</td>
-              <td>1.6549,00</td>
-              <td>Stenio de Oliveira</td>
-              <td><a href="#"><img src={pdfImg} alt="PDF" /></a></td>
-            </tr>
-            
+            {invoices.map((invoice: InvoicesProps, i) => (
+              <tr key={invoice.id}>
+                <td>{invoice.number}</td>
+                <td>{invoice.serie}</td>
+                <td>{invoice.total_value}</td>
+                <td>{invoice.customer.name}</td>
+                <td><a href='https://www.google.com.br'><img src={pdfImg} alt="PDF" /></a></td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </Content>

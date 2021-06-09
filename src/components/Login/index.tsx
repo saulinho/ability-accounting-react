@@ -1,18 +1,50 @@
-import { FormEvent, useContext, useState } from "react";
-import { AuthContext } from "../../contexts/auth";
+import { FormEvent, useState } from "react";
+import { api } from "../../services/api";
 import { Container, FormLoginStyle } from "./styles";
 
-export function Login() {
-  const context = useContext(AuthContext);
+
+interface LoginStatusProps {
+  loggedInStatus: string,
+  user: {}
+}
+
+interface UserInputProps {
+  email: string,
+  password: string,
+}
+
+interface LoginProps {
+  handleSuccessfulAuth: (data: LoginStatusProps) => void
+}
+
+export function Login(props: LoginProps) {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  async function handleSubmit(event: FormEvent){
-    event.preventDefault();
-    context.UserLogin({
+  async function userLogin(userInput: UserInputProps) {
+    await api
+    .post('sessions', {
+      user: {
+        ...userInput
+      }
+    })
+    .then(response => {
+      if (response.data.logged_in) {
+        props.handleSuccessfulAuth(response.data);
+      } else {
+        alert("Email ou senha incorreto!");
+      }
+    })
+    .catch(err => console.log(err));
+  }
+
+  function handleSubmit(event: FormEvent) {
+    userLogin({
       email: email,
-      password: password})
+      password: password,
+    })
+    event.preventDefault();
   }
 
   return (

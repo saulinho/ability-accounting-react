@@ -1,18 +1,127 @@
-import { GlobalStyles } from "./styles/global";
-import { Routes } from "./routes";
-import { AuthProvider } from "./contexts/auth";
+import { useEffect, useState } from "react";
+import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
+import { api } from "./services/api";
 
-function App() {
+import { Home } from "./pages/Home";
+import { Accounting } from "./pages/Accounting";
+import { Customer } from "./pages/Customer";
+import { NotFound } from "./pages/NotFound";
+
+import { GlobalStyles } from "./styles/global";
+
+interface LoginStatusProps {
+  loggedInStatus: string,
+  user: {} | {
+    name: string,
+    email: string,
+    accounting_id: number
+  }
+}
+
+export default function App() {
+
+  const history = useHistory();
+
+  const [loginStatus, setLoginStatus] = useState<LoginStatusProps>({loggedInStatus: 'NOT_LOGGED_IN', user: {}});
+
+  useEffect(() => {
+    function isLogin() {
+      api
+        .get('logged_in')
+        .then(response => {
+          if (response.data.logged_in && loginStatus.loggedInStatus === 'NOT_LOGGED_IN') {
+            setLoginStatus({
+              loggedInStatus: 'LOGGED_IN',
+              user: response.data.user
+            });
+          } else if (!response.data.logged_in && loginStatus.loggedInStatus === 'LOGGED_IN') {
+            setLoginStatus({
+              loggedInStatus: 'NOT_LOGGED_IN',
+              user: {}
+            });
+          } else {
+            setLoginStatus({
+              loggedInStatus: 'NOT_LOGGED_IN',
+              user: {}
+            });
+          }
+        })
+        .catch(err => {
+          history.push('/404');
+        });
+    }
+
+    isLogin()
+  }, [])
+
+  function handleLogout() {
+    setLoginStatus({
+      loggedInStatus: 'NOT_LOGGED_IN',
+      user: {}
+    });
+  }
+
+  function handleLogin(data: LoginStatusProps) {
+    setLoginStatus({
+      loggedInStatus: 'LOGGED_IN',
+      user: data.user
+    })
+  }
+
   return (
     <>
-    
-    <AuthProvider>
-      <Routes />
-    </AuthProvider>
+      <BrowserRouter>
+        <Switch>
+
+          <Route
+            exact
+            path='/'
+            render={props => (
+              <Home
+                {...props}
+                loggedInStatus={loginStatus.loggedInStatus}
+                handleLogout={handleLogout}
+                handleLogin={handleLogin}
+              />
+            )}
+          />
+
+          <Route
+            exact
+            path='/accounting'
+            render={props => (
+              <Accounting
+                {...props}
+                loggedInStatus={loginStatus.loggedInStatus}
+                handleLogout={handleLogout}
+                user={loginStatus.user}
+              />
+            )}
+          />
+
+          <Route
+            exact
+            path='/customer'
+            render={props => (
+              <Customer
+                {...props}
+                handleLogout={handleLogout}
+                user={loginStatus.user}
+              />
+            )}
+          />
+
+          <Route
+            exact
+            path='/404'
+            component={NotFound}
+          />
+
+        </Switch>
+      </BrowserRouter>
 
       <GlobalStyles />
     </>
+
   );
 }
-
-export default App;

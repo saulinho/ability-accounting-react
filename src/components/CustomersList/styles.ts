@@ -49,6 +49,11 @@ export const Content = styled.section`
         background: var(--list-odd);
       }
 
+      a {
+          color: var(--text-dark);
+          text-decoration: none;
+        }
+
     }
     li + li {
       margin-top: 0.25rem;
