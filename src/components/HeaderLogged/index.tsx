@@ -1,4 +1,4 @@
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import logoImg from '../../assets/logo.svg';
 import { api } from '../../services/api';
 
@@ -21,12 +21,20 @@ export function HeaderLogged(props: HeaderLoggedProps) {
     <Redirect to='/404' />
   }
 
-  const user = props.user as UserProps;
+  const history = useHistory();
 
-  async function handleLogout() {
+  function goHome(){
+    history.push('/');
+  }
+  
+
+  const user = props.user as UserProps;
+  
+  async function handleLogoutClick() {
     await api.delete('logout')
       .then(response => {
-        handleLogout()
+        props.handleLogout()
+        goHome()
       })
       .catch(err => {
         errorPage()
@@ -37,7 +45,7 @@ export function HeaderLogged(props: HeaderLoggedProps) {
     <Container>
       <img src={logoImg} alt="Logo Ability" />
       <span>Bem Vindo, {user.name}</span>
-      <button type="submit" onClick={handleLogout}>Sair</button>
+      <button type="submit" onClick={() => handleLogoutClick()}>Sair</button>
     </Container>
   );
 }
