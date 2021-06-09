@@ -6,6 +6,10 @@ export function PageError() {
 
   const history = useHistory();
 
+  function goHome() {
+    history.push('/')
+  }
+
   return (
     <Container>
       <Content>
@@ -14,7 +18,7 @@ export function PageError() {
 
       <h1>PÁGINA NÃO ENCONTRADA</h1>
 
-      <button onClick={history.goBack} type="button">Voltar</button>
+      <button onClick={() => goHome()} type="button">Voltar</button>
       </Content>
     </Container>
   );

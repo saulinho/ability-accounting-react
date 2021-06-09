@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Redirect, useLocation } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 import { api } from '../../services/api';
 
 import downloadImg from '../../assets/download.svg';
@@ -34,8 +34,10 @@ export function InvoicesTable() {
   const [invoices, setInvoices] = useState([]);
   const [company, setCompany] = useState<CompanyProps>({} as CompanyProps);
 
+  const history = useHistory();
+
   function errorPage() {
-    <Redirect to='/404' />
+    history.push('/404');
   }
 
   useEffect(() => {
@@ -47,7 +49,7 @@ export function InvoicesTable() {
           setInvoices(response.data.invoices)
         })
         .catch(err => {
-          errorPage();
+          errorPage()
         })
     }
     getInvoices()
