@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 
 export const Container = styled.footer`
+  
   width: 100%;
   max-width: 1280px;
   height: 200px;
@@ -90,5 +91,44 @@ export const Container = styled.footer`
     line-height: 1.1rem;
     color: var(--text-white);
     text-align: center;
+  }
+
+  @media (max-width: 480px) {
+    .footer-contact{
+      width: 100%;
+
+      .footer-logo{
+        a img {
+          width: 100%;
+        }
+      }
+      
+      .footer-social-media {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+
+        a {
+          text-align: center;
+          align-items: center;
+          justify-content: center;
+          padding: 0;
+          margin: 0;
+        }
+
+        a img {
+          width: 60%;
+          margin: 0;
+          padding: 0;
+        }
+        
+        a + a {
+          margin: 0;
+          margin-top: 1rem;
+          padding: 0;
+        }
+      }
+    }
   }
 `

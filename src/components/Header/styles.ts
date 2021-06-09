@@ -18,4 +18,8 @@ export const Container = styled.header`
     height: 7.5rem;
     margin-top: -2.5rem;
   }
+
+  @media (max-width: 480px){
+    height: 200px;
+  }
 `

@@ -20,6 +20,11 @@ export const Container = styled.main`
     line-height: 3.5rem;
     text-align: center;
   }
+
+  
+  @media (max-width: 480px) {
+    width: 95%;
+  }
 `
 
 export const FormLoginStyle = styled.form`
