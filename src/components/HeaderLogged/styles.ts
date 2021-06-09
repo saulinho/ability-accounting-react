@@ -44,4 +44,27 @@ export const Container = styled.header`
       filter: brightness(0.9);
     }
   }
+
+  @media (max-width: 480px) {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 200px;
+    
+    img {
+      width: 30rem;
+      margin: 0;
+      margin-bottom: -6rem;
+    }
+
+    span {
+      font-size: 2rem;
+      margin: 0 auto;
+    }
+
+    button[type="submit"] {
+      padding: 1rem 2rem;
+      margin: 0 auto;
+    }
+  }
 `
