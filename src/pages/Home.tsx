@@ -27,7 +27,6 @@ export function Home(props: HomeProps) {
     <>
       <Header />
       <Login handleSuccessfulAuth={handleSuccessfulAuth} />
-      <p>{props.loggedInStatus}</p>
       <Footer />
     </>
   );

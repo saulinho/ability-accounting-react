@@ -1,4 +1,3 @@
-
 import { CustomersList } from "../components/CustomersList";
 import { Footer } from "../components/Footer";
 import { HeaderLogged } from "../components/HeaderLogged";
@@ -14,12 +13,11 @@ interface AccountingProps {
 }
 
 export function Accounting(props: AccountingProps) {
-
+  
   return (
     <>
       <HeaderLogged user={props.user} handleLogout={props.handleLogout} />
       <CustomersList />
-      <p>{props.loggedInStatus}</p>
       <Footer />
     </>
   );
