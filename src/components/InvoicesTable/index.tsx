@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useHistory, useLocation } from 'react-router';
+import { Redirect, useLocation } from 'react-router';
 import { api } from '../../services/api';
 
 import downloadImg from '../../assets/download.svg';
@@ -27,15 +27,16 @@ export function InvoicesTable() {
     return new URLSearchParams(useLocation().search)
   }
 
-  const history = useHistory();
-
   const query = useQuery();
 
   const customer_id = query.get('id');
   
   const [invoices, setInvoices] = useState([]);
   const [company, setCompany] = useState<CompanyProps>({} as CompanyProps);
-  
+
+  function errorPage() {
+    <Redirect to='/404' />
+  }
 
   useEffect(() => {
     async function getInvoices() {
@@ -46,10 +47,11 @@ export function InvoicesTable() {
           setInvoices(response.data.invoices)
         })
         .catch(err => {
-          history.push('/404');
+          errorPage();
         })
     }
     getInvoices()
+    // eslint-disable-next-line
   }, []);
  
   return (

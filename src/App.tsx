@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import { api } from "./services/api";
 
 import { Home } from "./pages/Home";
@@ -20,11 +20,14 @@ interface LoginStatusProps {
 
 export default function App() {
 
-  const history = useHistory();
-
+  function errorPage() {
+    <Redirect to='/404' />
+  }
+  
   const [loginStatus, setLoginStatus] = useState<LoginStatusProps>({loggedInStatus: 'NOT_LOGGED_IN', user: {}});
-
+  
   useEffect(() => {
+    
     function isLogin() {
       api
         .get('logged_in')
@@ -47,11 +50,12 @@ export default function App() {
           }
         })
         .catch(err => {
-          history.push('/404');
+          errorPage();
         });
     }
 
     isLogin()
+    // eslint-disable-next-line
   }, [])
 
   function handleLogout() {

@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { useHistory } from 'react-router';
+import { Redirect } from 'react-router-dom';
 import logoImg from '../../assets/logo.svg';
 import { api } from '../../services/api';
 
@@ -18,7 +17,9 @@ interface HeaderLoggedProps {
 
 export function HeaderLogged(props: HeaderLoggedProps) {
 
-  const history = useHistory();
+  function errorPage() {
+    <Redirect to='/404' />
+  }
 
   const user = props.user as UserProps;
 
@@ -28,7 +29,7 @@ export function HeaderLogged(props: HeaderLoggedProps) {
         handleLogout()
       })
       .catch(err => {
-        history.push('/404')
+        errorPage()
       })
   }
 

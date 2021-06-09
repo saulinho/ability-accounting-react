@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 import { api } from '../../services/api';
 import { Container, Content} from './styles'
@@ -10,8 +10,10 @@ interface CompanyProps {
 }
 
 export function CustomersList() {
-  
-  const history = useHistory();
+
+  function errorPage() {
+    <Redirect to='/404' />
+  }
 
   const [companies, setCompanies] = useState([]);
 
@@ -22,12 +24,13 @@ export function CustomersList() {
         setCompanies(response.data.companies);
       })
       .catch(err => {
-        history.push('/404');
+        errorPage()
       });
   }
 
   useEffect(() => {
     getCompanies()
+    // eslint-disable-next-line
   },[])
 
   return (
