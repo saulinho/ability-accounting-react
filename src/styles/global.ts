@@ -65,4 +65,66 @@ export const GlobalStyles = createGlobalStyle`
     cursor: not-allowed;
   }
 
+  .ReactModal__Body--open {
+    overflow: hidden;
+  }
+
+  .react-modal-overlay {
+    background: rgba(0,0,0,0.5);
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .react-modal-content {
+    width: 100%;
+    max-width: 800px;
+    height: 100vh;
+    background: var(--background);
+    padding: 1rem;
+    position: relative;
+    border-radius: 1.5rem;
+    outline: none;
+    overflow-y: auto;
+
+    display: inline-grid;
+  }
+
+  .react-modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    border: 0;
+    background: none;
+
+    transition: filter 0.2s;
+
+    img {
+      width: 1.5rem;
+    }
+
+    &:hover {
+      filter: brightness(0.8);
+    }
+  }
+
+  ::-webkit-scrollbar {
+    width: 1px;
+    height: 1px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0,0);
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.0);
+  }
+
 `
