@@ -14,11 +14,16 @@ export const Container = styled.main`
 
   padding: 3rem;
 
+  img {
+    width: 2rem;
+  }
+
   h1 {
     font-size: 1.5rem;
     font-weight: 700;
     line-height: 3.5rem;
     text-align: center;
+    margin-top: -2rem;
   }
 
   @media (max-width: 480px) {
@@ -54,16 +59,17 @@ export const Content = styled.section`
       }
 
       a {
-          color: var(--text-dark);
-          text-decoration: none;
-        }
+        text-decoration: none;
+        color: var(--text-dark);
+      }
+
+      span + span {
+        margin-left: 2rem;
+      }
 
     }
     li + li {
       margin-top: 0.25rem;
     }
   }
-
-  
-
 `

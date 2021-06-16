@@ -1,49 +1,52 @@
 import { useEffect, useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import { api } from '../../services/api';
+
 import { Container, Content} from './styles'
 
 interface CompanyProps {
   id: number,
-  name: string
+  name: string,
+  number: number
 }
 
 export function CustomersList() {
 
-  function errorPage() {
-    <Redirect to='/404' />
-  }
-
-  const [companies, setCompanies] = useState([]);
-
-  async function getCompanies() {
-    await api
-      .get('companies')
-      .then(response => {
-        setCompanies(response.data.companies);
-      })
-      .catch(err => {
-        errorPage()
-      });
-  }
+  const [companies, setCompanies] = useState<CompanyProps[]>([]);
 
   useEffect(() => {
+    async function getCompanies() {
+      await api
+        .get('companies')
+        .then(response => {
+          setCompanies(response.data.companies);
+        })
+        .catch(err => console.log(err));
+    }
+
     getCompanies()
-    // eslint-disable-next-line
   },[])
 
   return (
     <Container>
+
       <h1>CLIENTES CADASTRADOS</h1>
 
       <Content>
         <ul>
-          {companies.map((company: CompanyProps, i) => (
+          {companies.map((company) => (
               <li key={company.id}>
-                <a href={`/customer?id=${company.id}`}>
-                  {company.name}
-                </a>
+                <Link to={`/customer?id=${company.id}`}>
+                  <span>
+                    {
+                      company.number
+                      .toString()
+                      .replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5")
+                    }
+                    </span>
+                  <span>{company.name}</span>
+                </Link>
               </li>
           ))}
         </ul>
