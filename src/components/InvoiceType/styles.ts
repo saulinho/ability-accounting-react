@@ -14,11 +14,40 @@ export const Container = styled.main`
 
   padding: 3rem;
 
-  h1 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    line-height: 3.5rem;
-    text-align: center;
+  .header-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    button {
+      width: 1rem;
+      height: 1rem;
+      background: transparent;
+      border: none;
+      position: absolute;
+      left: 0;
+      top: -2rem;
+
+      transition: filter 0.2s;
+      
+      &:hover {
+        filter: opacity(0.7);
+      }
+      img {
+        width: 2rem;
+        height: 2rem;
+      }
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 3.5rem;
+      text-align: center;
+      margin-top: -2rem;
+    }
   }
 
   @media (max-width: 480px) {
