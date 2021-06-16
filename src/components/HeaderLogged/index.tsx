@@ -1,6 +1,8 @@
-import { Redirect, useHistory } from 'react-router-dom';
-import logoImg from '../../assets/logo.svg';
+import { useHistory } from 'react-router-dom';
+
 import { api } from '../../services/api';
+
+import logoImg from '../../assets/logo.svg';
 
 import { Container } from "./styles";
 
@@ -17,16 +19,11 @@ interface HeaderLoggedProps {
 
 export function HeaderLogged(props: HeaderLoggedProps) {
 
-  function errorPage() {
-    <Redirect to='/404' />
-  }
-
   const history = useHistory();
 
   function goHome(){
     history.push('/');
   }
-  
 
   const user = props.user as UserProps;
   
@@ -36,16 +33,14 @@ export function HeaderLogged(props: HeaderLoggedProps) {
         props.handleLogout()
         goHome()
       })
-      .catch(err => {
-        errorPage()
-      })
+      .catch(err => console.log(err))
   }
 
   return (
     <Container>
       <img src={logoImg} alt="Logo Ability" />
       <span>Bem Vindo, {user.name}</span>
-      <button type="submit" onClick={() => handleLogoutClick()}>Sair</button>
+      <button type="submit" onClick={handleLogoutClick}>Sair</button>
     </Container>
   );
 }
