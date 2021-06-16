@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
-import { api } from "./services/api";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import { Home } from "./pages/Home";
-import { Accounting } from "./pages/Accounting";
+import { Customers } from "./pages/Customers";
 import { Customer } from "./pages/Customer";
+import { InvoiceType } from "./pages/InvoiceType";
+import { List } from "./pages/List";
 import { NotFound } from "./pages/NotFound";
+
+import { api } from "./services/api";
 
 import { GlobalStyles } from "./styles/global";
 
@@ -20,16 +23,13 @@ interface LoginStatusProps {
 
 export default function App() {
 
-  function errorPage() {
-    <Redirect to='/404' />
-  }
-  
-  const [loginStatus, setLoginStatus] = useState<LoginStatusProps>({loggedInStatus: 'NOT_LOGGED_IN', user: {}});
-  
+  const [loginStatus, setLoginStatus] = useState<LoginStatusProps>(
+    { loggedInStatus: 'NOT_LOGGED_IN', user: {} }
+  );
+
   useEffect(() => {
-    
-    function isLogin() {
-      api
+    async function isLogin() {
+      await api
         .get('logged_in')
         .then(response => {
           if (response.data.logged_in && loginStatus.loggedInStatus === 'NOT_LOGGED_IN') {
@@ -49,14 +49,11 @@ export default function App() {
             });
           }
         })
-        .catch(err => {
-          errorPage();
-        });
+        .catch(err => console.log(err));
     }
-
-    isLogin()
+    isLogin();
     // eslint-disable-next-line
-  }, [])
+  },[])
 
   function handleLogout() {
     setLoginStatus({
@@ -64,67 +61,75 @@ export default function App() {
       user: {}
     });
   }
-
+  
   function handleLogin(data: LoginStatusProps) {
     setLoginStatus({
       loggedInStatus: 'LOGGED_IN',
       user: data.user
     })
   }
-
+  
   return (
     <>
+      <GlobalStyles />
       <BrowserRouter>
         <Switch>
 
-          <Route
-            exact
-            path='/'
-            render={props => (
-              <Home
-                {...props}
-                loggedInStatus={loginStatus.loggedInStatus}
-                handleLogout={handleLogout}
-                handleLogin={handleLogin}
-              />
-            )}
-          />
+          <Route exact path='/'>
+            <Home
+              loggedInStatus={loginStatus.loggedInStatus}
+              handleLogout={handleLogout}
+              handleLogin={handleLogin}
+            />
+          </Route>
 
-          <Route
-            exact
-            path='/accounting'
-            render={props => (
-              <Accounting
-                {...props}
-                loggedInStatus={loginStatus.loggedInStatus}
-                handleLogout={handleLogout}
-                user={loginStatus.user}
-              />
-            )}
-          />
+          <Route exact path='/customers' >
+            <Customers
+              loggedInStatus={loginStatus.loggedInStatus}
+              handleLogout={handleLogout}
+              user={loginStatus.user}
+            />
+          </Route>
 
-          <Route
-            exact
-            path='/customer'
-            render={props => (
-              <Customer
-                {...props}
-                handleLogout={handleLogout}
-                user={loginStatus.user}
-              />
-            )}
-          />
+          <Route exact path='/customer'>
+            <Customer
+              handleLogout={handleLogout}
+              user={loginStatus.user}
+            />
+          </Route>
 
-          <Route
-            exact
-            path='/404'
-            component={NotFound}
-          />
+          <Route exact path='/invoicetype'>
+            <InvoiceType
+              handleLogout={handleLogout}
+              user={loginStatus.user}
+            />
+          </Route>
+
+          <Route exact path='/nf'>
+            <List
+              handleLogout={handleLogout}
+              user={loginStatus.user}
+            />
+          </Route>
+
+          <Route exact path='/cfop'>
+            <List
+              handleLogout={handleLogout}
+              user={loginStatus.user}
+            />
+          </Route>
+
+          <Route exact path='/piscofins'>
+            <List
+              handleLogout={handleLogout}
+              user={loginStatus.user}
+            />
+          </Route>
+
+          <Route component={NotFound} />
 
         </Switch>
       </BrowserRouter>
-
-      <GlobalStyles />
     </>
 
   );
