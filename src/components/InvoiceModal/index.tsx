@@ -392,7 +392,7 @@ export function InvoiceModal({ isOpen, onRequestClose, dataInvoice }: NewTransac
 
           <h2>PRODUTOS</h2>
 
-          <table>
+          <table className="product-table">
             <thead>
               <tr>
                 <th>CÓDIGO</th>

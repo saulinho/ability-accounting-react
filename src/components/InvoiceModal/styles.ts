@@ -32,9 +32,10 @@ export const Container = styled.main`
     font-weight: 400;
     text-align: center;
 
-    &:last-child {
-      font-size: 0.75rem;
-    }
+  }
+  
+  .product-table {
+    font-size: 0.75rem;
   }
 
   th {
