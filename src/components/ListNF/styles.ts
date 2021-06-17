@@ -101,9 +101,24 @@ export const Content = styled.section`
         line-height: 1.5rem;
         font-weight: 400;
         background: var(--list-pair);
+
         
         &:nth-child(odd) {
           background: var(--list-odd);
+        }
+
+        td {
+          transition: filter 0.2s;
+  
+          img {
+            vertical-align: middle;
+            width: 1.25rem;
+            cursor: pointer;
+  
+            &:hover {
+              filter: opacity(0.8);
+            }
+          }
         }
       }
     }

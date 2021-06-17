@@ -4,6 +4,7 @@ import { Container, Content } from './styles';
 import { InvoiceModal } from '../InvoiceModal';
 
 import arrow_backImg from '../../assets/arrow_back.svg';
+import viewImg from '../../assets/view.svg';
 
 import { api } from '../../services/api';
 
@@ -106,14 +107,14 @@ export function ListNF() {
               <th>Modelo</th>
               <th>Emissão</th>
               <th>Saída</th>
-              <th>Chade Acesso</th>
               <th>Valor Total</th>
+              <th>Visualizar</th>
             </tr>
           </thead>
 
           <tbody>
             {invoices.map((invoice) => (
-              <tr key={invoice.id} onClick={() => handleOpenNewTransactionModal(invoice)}>
+              <tr key={invoice.id}>
                 <td>{invoice.number}</td>
                 <td>{invoice.serie}</td>
                 <td>{invoice.model}</td>
@@ -133,19 +134,15 @@ export function ListNF() {
                 </td>
                 <td>
                   {
-                    invoice.access_key.substr(0, 10) +
-                    '...' +
-                    invoice.access_key.substr(34, 44)
-                  }
-                </td>
-                <td>
-                  {
                     new Intl.NumberFormat('pt-BR', {
                       style: 'currency',
                       currency: 'BRL',
                     })
                       .format(invoice.invoice_value)
                   }
+                </td>
+                <td onClick={() => handleOpenNewTransactionModal(invoice)}>
+                  <img src={viewImg} alt="Visualizar NFe" />
                 </td>
               </tr>
             ))}
