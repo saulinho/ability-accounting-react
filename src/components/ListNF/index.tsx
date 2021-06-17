@@ -43,23 +43,24 @@ interface InvoicesProps {
 }
 
 export function ListNF() {
-  
+
   function useQuery() {
     return new URLSearchParams(useLocation().search)
   }
-  
+
   const query = useQuery();
-  
+
   const customer_id = query.get('id');
-  
+  const type = query.get('type');
+
   const [invoices, setInvoices] = useState<InvoicesProps[]>([]);
-  const [company, setCompany] = useState<CompanyProps>({name:''});
+  const [company, setCompany] = useState<CompanyProps>({ name: '' });
   const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] = useState(false);
   const [invoiceModal, setInvoiceModal] = useState<InvoicesProps>({} as InvoicesProps);
-  
+
   const history = useHistory();
-  
-  function backPage(){
+
+  function backPage() {
     history.goBack();
   }
 
@@ -75,7 +76,7 @@ export function ListNF() {
   useEffect(() => {
     async function getInvoices() {
       await api
-        .get(`invoices?id=${customer_id}`)
+        .get(`invoices?type=${type}&id=${customer_id}`)
         .then(response => {
           setCompany(response.data.company)
           setInvoices(response.data.invoices)
@@ -85,7 +86,7 @@ export function ListNF() {
     getInvoices()
     // eslint-disable-next-line
   }, []);
- 
+
   return (
     <Container>
       <div className="header-title">
@@ -102,9 +103,11 @@ export function ListNF() {
             <tr>
               <th>Número</th>
               <th>Série</th>
+              <th>Modelo</th>
+              <th>Emissão</th>
+              <th>Saída</th>
+              <th>Chade Acesso</th>
               <th>Valor Total</th>
-              <th>Cliente</th>
-              {/* <th><img src={downloadImg} alt="Download" /></th> */}
             </tr>
           </thead>
 
@@ -113,15 +116,43 @@ export function ListNF() {
               <tr key={invoice.id} onClick={() => handleOpenNewTransactionModal(invoice)}>
                 <td>{invoice.number}</td>
                 <td>{invoice.serie}</td>
-                <td>{invoice.invoice_value}</td>
-                <td>{invoice.customer.name}</td>
-                {/* <td><a href='https://www.google.com.br'><img src={pdfImg} alt="PDF" /></a></td> */}
+                <td>{invoice.model}</td>
+                <td>
+                  {invoice.date_issue
+                    ? new Intl.DateTimeFormat('pt-BR')
+                      .format(new Date(invoice.date_issue))
+                    : ''
+                  }
+                </td>
+                <td>
+                  {invoice.date_departure
+                    ? new Intl.DateTimeFormat('pt-BR')
+                      .format(new Date(invoice.date_departure))
+                    : ''
+                  }
+                </td>
+                <td>
+                  {
+                    invoice.access_key.substr(0, 10) +
+                    '...' +
+                    invoice.access_key.substr(34, 44)
+                  }
+                </td>
+                <td>
+                  {
+                    new Intl.NumberFormat('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL',
+                    })
+                      .format(invoice.invoice_value)
+                  }
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </Content>
-      <InvoiceModal dataInvoice={invoiceModal} isOpen={isNewTransactionModalOpen} onRequestClose={handleCloseNewTransactionModal}/>
+      <InvoiceModal dataInvoice={invoiceModal} isOpen={isNewTransactionModalOpen} onRequestClose={handleCloseNewTransactionModal} />
 
     </Container>
   );
