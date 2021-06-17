@@ -71,7 +71,7 @@ export function InvoiceModal({ isOpen, onRequestClose, dataInvoice }: NewTransac
 
   }, [])
 
-  
+
   const invoice_products = products.filter(product => product.invoice_id === dataInvoice.id)
 
   return (
@@ -111,15 +111,21 @@ export function InvoiceModal({ isOpen, onRequestClose, dataInvoice }: NewTransac
               <tr>
                 <td>{dataInvoice.access_key}</td>
                 <td>
-                  {dataInvoice.date_issue
-                    ? new Intl.DateTimeFormat('pt-BR')
-                      .format(new Date(dataInvoice.date_issue))
-                    : ''}
+                  {
+                    dataInvoice.date_issue
+                      ? new Intl.DateTimeFormat('pt-BR')
+                        .format(new Date(dataInvoice.date_issue))
+                      : ''
+                  }
                 </td>
-                <td>{dataInvoice.date_departure
-                    ? new Intl.DateTimeFormat('pt-BR')
-                      .format(new Date(dataInvoice.date_departure))
-                    : ''}</td>
+                <td>
+                  {
+                    dataInvoice.date_departure
+                      ? new Intl.DateTimeFormat('pt-BR')
+                        .format(new Date(dataInvoice.date_departure))
+                      : ''
+                  }
+                </td>
               </tr>
             </tbody>
 
@@ -184,31 +190,51 @@ export function InvoiceModal({ isOpen, onRequestClose, dataInvoice }: NewTransac
 
             <tbody>
               <tr>
-                <td>{new Intl.NumberFormat('pt-BR', {
-                  style: 'currency',
-                  currency: 'BRL',
-                })
-                  .format(dataInvoice.icms_base)}</td>
-                <td>{new Intl.NumberFormat('pt-BR', {
-                  style: 'currency',
-                  currency: 'BRL',
-                })
-                  .format(dataInvoice.sticms_base)}</td>
-                <td>{new Intl.NumberFormat('pt-BR', {
-                  style: 'currency',
-                  currency: 'BRL',
-                })
-                  .format(dataInvoice.ipi_base)}</td>
-                <td>{new Intl.NumberFormat('pt-BR', {
-                  style: 'currency',
-                  currency: 'BRL',
-                })
-                  .format(dataInvoice.pis_base)}</td>
-                <td>{new Intl.NumberFormat('pt-BR', {
-                  style: 'currency',
-                  currency: 'BRL',
-                })
-                  .format(dataInvoice.cofins_base)}</td>
+                <td>
+                  {
+                    new Intl.NumberFormat('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL',
+                    })
+                      .format(dataInvoice.icms_base)
+                  }
+                </td>
+                <td>
+                  {
+                    new Intl.NumberFormat('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL',
+                    })
+                      .format(dataInvoice.sticms_base)
+                  }
+                </td>
+                <td>
+                  {
+                    new Intl.NumberFormat('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL',
+                    })
+                      .format(dataInvoice.ipi_base)
+                  }
+                </td>
+                <td>
+                  {
+                    new Intl.NumberFormat('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL',
+                    })
+                      .format(dataInvoice.pis_base)
+                  }
+                </td>
+                <td>
+                  {
+                    new Intl.NumberFormat('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL',
+                    })
+                      .format(dataInvoice.cofins_base)
+                  }
+                </td>
               </tr>
             </tbody>
           </table>
@@ -225,31 +251,51 @@ export function InvoiceModal({ isOpen, onRequestClose, dataInvoice }: NewTransac
             </thead>
             <tbody>
               <tr>
-                <td>{new Intl.NumberFormat('pt-BR', {
-                  style: 'currency',
-                  currency: 'BRL',
-                })
-                  .format(dataInvoice.icms_value)}</td>
-                <td>{new Intl.NumberFormat('pt-BR', {
-                  style: 'currency',
-                  currency: 'BRL',
-                })
-                  .format(dataInvoice.sticms_value)}</td>
-                <td>{new Intl.NumberFormat('pt-BR', {
-                  style: 'currency',
-                  currency: 'BRL',
-                })
-                  .format(dataInvoice.ipi_value)}</td>
-                <td>{new Intl.NumberFormat('pt-BR', {
-                  style: 'currency',
-                  currency: 'BRL',
-                })
-                  .format(dataInvoice.pis_value)}</td>
-                <td>{new Intl.NumberFormat('pt-BR', {
-                  style: 'currency',
-                  currency: 'BRL',
-                })
-                  .format(dataInvoice.cofins_value)}</td>
+                <td>
+                  {
+                    new Intl.NumberFormat('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL',
+                    })
+                      .format(dataInvoice.icms_value)
+                  }
+                </td>
+                <td>
+                  {
+                    new Intl.NumberFormat('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL',
+                    })
+                      .format(dataInvoice.sticms_value)
+                  }
+                </td>
+                <td>
+                  {
+                    new Intl.NumberFormat('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL',
+                    })
+                      .format(dataInvoice.ipi_value)
+                  }
+                </td>
+                <td>
+                  {
+                    new Intl.NumberFormat('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL',
+                    })
+                      .format(dataInvoice.pis_value)
+                  }
+                </td>
+                <td>
+                  {
+                    new Intl.NumberFormat('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL',
+                    })
+                      .format(dataInvoice.cofins_value)
+                  }
+                </td>
               </tr>
             </tbody>
           </table>
@@ -270,31 +316,51 @@ export function InvoiceModal({ isOpen, onRequestClose, dataInvoice }: NewTransac
 
             <tbody>
               <tr>
-                <td>{new Intl.NumberFormat('pt-BR', {
-                  style: 'currency',
-                  currency: 'BRL',
-                })
-                  .format(dataInvoice.shipping_value)}</td>
-                <td>{new Intl.NumberFormat('pt-BR', {
-                  style: 'currency',
-                  currency: 'BRL',
-                })
-                  .format(dataInvoice.safe_value)}</td>
-                <td>{new Intl.NumberFormat('pt-BR', {
-                  style: 'currency',
-                  currency: 'BRL',
-                })
-                  .format(dataInvoice.expenses_value)}</td>
-                <td>{new Intl.NumberFormat('pt-BR', {
-                  style: 'currency',
-                  currency: 'BRL',
-                })
-                  .format(dataInvoice.discount_value)}</td>
-                <td>{new Intl.NumberFormat('pt-BR', {
-                  style: 'currency',
-                  currency: 'BRL',
-                })
-                  .format(dataInvoice.total_product)}</td>
+                <td>
+                  {
+                    new Intl.NumberFormat('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL',
+                    })
+                      .format(dataInvoice.shipping_value)
+                  }
+                </td>
+                <td>
+                  {
+                    new Intl.NumberFormat('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL',
+                    })
+                      .format(dataInvoice.safe_value)
+                  }
+                </td>
+                <td>
+                  {
+                    new Intl.NumberFormat('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL',
+                    })
+                      .format(dataInvoice.expenses_value)
+                  }
+                </td>
+                <td>
+                  {
+                    new Intl.NumberFormat('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL',
+                    })
+                      .format(dataInvoice.discount_value)
+                  }
+                </td>
+                <td>
+                  {
+                    new Intl.NumberFormat('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL',
+                    })
+                      .format(dataInvoice.total_product)
+                  }
+                </td>
               </tr>
             </tbody>
 
@@ -310,11 +376,15 @@ export function InvoiceModal({ isOpen, onRequestClose, dataInvoice }: NewTransac
 
             <tbody>
               <tr>
-                <td>{new Intl.NumberFormat('pt-BR', {
-                  style: 'currency',
-                  currency: 'BRL',
-                })
-                  .format(dataInvoice.invoice_value)}</td>
+                <td>
+                  {
+                    new Intl.NumberFormat('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL',
+                    })
+                      .format(dataInvoice.invoice_value)
+                  }
+                </td>
               </tr>
             </tbody>
 
@@ -345,19 +415,27 @@ export function InvoiceModal({ isOpen, onRequestClose, dataInvoice }: NewTransac
                   <td>{product.cfop}</td>
                   <td>{product.cest}</td>
                   <td>{product.quantity}</td>
-                  <td>{new Intl.NumberFormat('pt-BR', {
-                  style: 'currency',
-                  currency: 'BRL',
-                })
-                  .format(product.price_unitary)}</td>
-                  <td>{new Intl.NumberFormat('pt-BR', {
-                  style: 'currency',
-                  currency: 'BRL',
-                })
-                  .format(product.price_total)}</td>
-              </tr>
+                  <td>
+                    {
+                      new Intl.NumberFormat('pt-BR', {
+                        style: 'currency',
+                        currency: 'BRL',
+                      })
+                        .format(product.price_unitary)
+                    }
+                  </td>
+                  <td>
+                    {
+                      new Intl.NumberFormat('pt-BR', {
+                        style: 'currency',
+                        currency: 'BRL',
+                      })
+                        .format(product.price_total)
+                    }
+                  </td>
+                </tr>
               ))}
-              
+
             </tbody>
           </table>
 
