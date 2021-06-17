@@ -71,7 +71,7 @@ export const Content = styled.section`
     font-weight: 700;
     line-height: 2.5rem;
 
-    background: var(--blue-dark);
+    background: var(--green-dark);
     border: 0;
     border-radius: 0.5rem;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
