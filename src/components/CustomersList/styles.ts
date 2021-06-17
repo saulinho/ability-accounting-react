@@ -39,37 +39,60 @@ export const Content = styled.section`
   justify-content: center;
   margin-top: 4rem;
 
-  ul {
+  table {
     width: 100%;
-    list-style: none;
+    border-spacing: 0 0.25rem;
+    text-align: left;
+    
+    thead {
+      tr:first-child th:first-child { border-top-left-radius: 0.25rem; }
+      tr:first-child th:last-child { border-top-right-radius: 0.25rem; }
+      tr:last-child th:first-child { border-bottom-left-radius: 0.25rem; }
+      tr:last-child th:last-child { border-bottom-right-radius: 0.25rem; }
 
-    li {
-      width: 100%;
+      th {
+        font-size: 1.25rem;
+        font-weight: 700;
+        line-height: 2rem;
+        color: var(--text-dark);
+        padding: 0 2rem;
 
-      font-size: 1rem;
-      font-weight: 400;
-      line-height: 1.5rem;
-      color: var(--text-dark);
-
-      padding: 0 2rem;
-      background: var(--list-pair);
-
-      &:nth-child(odd) {
         background: var(--list-odd);
       }
-
-      a {
-        text-decoration: none;
-        color: var(--text-dark);
-      }
-
-      span + span {
-        margin-left: 2rem;
-      }
-
     }
-    li + li {
-      margin-top: 0.25rem;
+
+    .cnpj {
+      width: 35%;
+    }
+
+    tbody {
+      tr:first-child td:first-child { border-top-left-radius: 0.25rem; }
+      tr:first-child td:last-child { border-top-right-radius: 0.25rem; }
+      tr:last-child td:first-child { border-bottom-left-radius: 0.25rem; }
+      tr:last-child td:last-child { border-bottom-right-radius: 0.25rem; }
+      
+      tr {
+        font-size: 1rem;
+        line-height: 1.5rem;
+        font-weight: 400;
+        background: var(--list-pair);
+        cursor: pointer;
+
+        transition: filter 0.2s;
+        
+        &:nth-child(odd) {
+          background: var(--list-odd);
+        }
+
+        &:hover {
+          filter: opacity(0.7);
+        }
+
+        td {
+          padding: 0 2rem
+        }
+      }
+
     }
   }
 `
