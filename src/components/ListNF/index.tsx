@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
 import { Container, Content } from './styles';
 import { InvoiceModal } from '../InvoiceModal';
@@ -7,10 +7,6 @@ import arrow_backImg from '../../assets/arrow_back.svg';
 import viewImg from '../../assets/view.svg';
 
 import { api } from '../../services/api';
-
-interface CompanyProps {
-  name: string
-}
 
 interface InvoicesProps {
   id: number,
@@ -55,9 +51,10 @@ export function ListNF() {
   const type = query.get('type');
 
   const [invoices, setInvoices] = useState<InvoicesProps[]>([]);
-  const [company, setCompany] = useState<CompanyProps>({ name: '' });
   const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] = useState(false);
   const [invoiceModal, setInvoiceModal] = useState<InvoicesProps>({} as InvoicesProps);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
 
   const history = useHistory();
 
@@ -74,19 +71,45 @@ export function ListNF() {
     setIsNewTransactionModalOpen(false);
   }
 
-  useEffect(() => {
-    async function getInvoices() {
-      await api
-        .get(`invoices?type=${type}&id=${customer_id}`)
-        .then(response => {
-          setCompany(response.data.company)
-          setInvoices(response.data.invoices)
-        })
-        .catch(err => console.log(err));
-    }
+  function handleSubmitDateInterval(event: FormEvent){
+    event.preventDefault();
     getInvoices()
-    // eslint-disable-next-line
-  }, []);
+  }
+
+  const endDateConvert = endDate.split('-').map((x => +x));
+
+  const endDatetoNumber = endDateConvert.map((x,i) => {
+    if (i === 2) {
+        x++
+    }
+    return x
+  });
+
+  const endDateTimeStamp = Date.parse(endDatetoNumber.toString());
+
+  const endDateDate = new Date(endDateTimeStamp);
+
+  const endDateDay = endDateDate.getDate().toString().padStart(2,'0');
+  const endDateMonth = (endDateDate.getMonth() + 1 ).toString().padStart(2,'0');
+  const endDateYear = endDateDate.getFullYear().toString()
+
+  const endDateFormated = (endDateYear + '-' + endDateMonth + '-' + endDateDay)
+
+  async function getInvoices() {
+    await api
+      .get('invoices', {
+        params: {
+          type: type,
+          id: customer_id,
+          start_date: startDate,
+          end_date: endDateFormated
+        }
+      })
+      .then(response => {
+        setInvoices(response.data.invoices)
+      })
+      .catch(err => console.log(err));
+  }
 
   return (
     <Container>
@@ -95,10 +118,36 @@ export function ListNF() {
           <img onClick={backPage} src={arrow_backImg} alt="Voltar" />
         </button>
 
-        <h1>NOTAS FISCAIS {company.name.toUpperCase()}</h1>
+        <h1>NOTAS FISCAIS</h1>
       </div>
 
       <Content>
+
+        <form onSubmit={handleSubmitDateInterval}>
+          <h3>Insira um intervalo de datas: </h3>
+          <div>
+            <input
+              type="date"
+              name="start_date"
+              id="start_date"
+              value={startDate}
+              onChange={event => setStartDate(event.target.value)}
+            />
+
+            <span>-</span>
+            
+            <input
+              type="date"
+              name="end_date"
+              id="end_date"
+              value={endDate}
+              onChange={event => setEndDate(event.target.value)}
+            />
+
+            <button type="submit">Listar</button>
+          </div>
+        </form>
+
         <table>
           <thead>
             <tr>

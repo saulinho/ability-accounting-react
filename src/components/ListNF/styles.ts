@@ -63,6 +63,66 @@ export const Content = styled.section`
   justify-content: center;
   margin-top: 4rem;
 
+  form{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    margin-bottom: 2rem;
+
+    div {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      span {
+        margin-right: 1rem;
+      }
+    }
+
+    input {
+      font-size: 1rem;
+      font-weight: 600;
+      line-height: 1rem;
+      text-align: center;
+      background-color: var(--text-white);
+      border: 0;
+      border-radius: 0.5rem;
+      box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+      padding: 0.2rem 0.2rem;
+      outline: none;
+      margin-right: 1rem;
+    }
+
+    button[type="submit"] {
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1rem;
+
+      background: var(--green);
+      border: 0;
+      border-radius: 0.5rem;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+      padding: 0.5rem 2rem;
+
+      transition: filter 0.2s;
+
+      &:hover {
+        filter: brightness(0.9);
+      }
+    }
+  }
+  
+  @media (max-width: 720px) {
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
   table {
     width: 100%;
     border-spacing: 0 0.25rem;
@@ -123,5 +183,5 @@ export const Content = styled.section`
       }
     }
   }
-    
+  
 `
