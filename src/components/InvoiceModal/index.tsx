@@ -1,60 +1,9 @@
 import Modal from 'react-modal';
+import { NewTransactionModalProps } from '../../@types';
 
 import imgClose from '../../assets/close.svg';
 
 import { Container } from './styles';
-
-interface InvoicesProps {
-  id: number,
-  access_key: string,
-  cofins_base: number,
-  cofins_value: number,
-  customer: {
-    name: string,
-  }
-  date_departure: Date,
-  date_issue: Date,
-  discount_value: number,
-  expenses_value: number,
-  icms_base: number,
-  icms_value: number,
-  invoice_value: number,
-  ipi_base: number,
-  ipi_value: number,
-  model: string,
-  number: number,
-  pis_base: number,
-  pis_value: number,
-  safe_value: number,
-  serie: string,
-  shipping_value: number,
-  sticms_base: number,
-  sticms_value: number,
-  total_product: number,
-  type_movement: string,
-  type_record: string
-}
-
-interface InvoiceProductsProps {
-  id: number,
-  product_id: number,
-  invoice_id: number,
-  description: string,
-  ncm: string,
-  cfop: string,
-  cest: string,
-  quantity: number,
-  price_total: number,
-  price_unitary: number
-}
-
-interface NewTransactionModalProps {
-  isOpen: boolean;
-  onRequestClose: () => void;
-  dataInvoice: InvoicesProps
-  dataProducts: InvoiceProductsProps[]
-
-}
 
 export function InvoiceModal({ isOpen, onRequestClose, dataInvoice, dataProducts }: NewTransactionModalProps) {
 

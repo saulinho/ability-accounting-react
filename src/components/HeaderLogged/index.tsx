@@ -1,21 +1,10 @@
 import { useHistory } from 'react-router-dom';
-
 import { api } from '../../services/api';
+import { HeaderLoggedProps, UserProps } from '../../@types';
 
 import logoImg from '../../assets/logo.svg';
 
 import { Container } from "./styles";
-
-type UserProps = {
-  name: string,
-  email: string,
-  accounting_id: number
-}
-
-interface HeaderLoggedProps {
-  user: {} | UserProps,
-  handleLogout: () => void
-}
 
 export function HeaderLogged(props: HeaderLoggedProps) {
 
@@ -39,7 +28,9 @@ export function HeaderLogged(props: HeaderLoggedProps) {
   return (
     <Container>
       <img src={logoImg} alt="Logo Ability" />
+
       <span>Bem Vindo, {user.name}</span>
+      
       <button type="submit" onClick={handleLogoutClick}>Sair</button>
     </Container>
   );

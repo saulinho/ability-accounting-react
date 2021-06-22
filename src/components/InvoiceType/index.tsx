@@ -1,19 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
+import { api } from '../../services/api';
+import { CompanyProps } from '../../@types';
 
 import nfe_inImg from '../../assets/nfe_in.svg';
 import nfe_outImg from '../../assets/nfe_out.svg';
 import nfce_outImg from '../../assets/nfce_out.svg';
 import arrow_backImg from '../../assets/arrow_back.svg';
 
-import { api } from '../../services/api';
-
 import { Container, Content } from './styles'
-
-interface Companies {
-  id: number,
-  name: string
-}
 
 export function InvoiceType() {
 
@@ -22,7 +17,7 @@ export function InvoiceType() {
 
   const history = useHistory();
 
-  const [companies, setCompanies] = useState<Companies[]>([]);
+  const [companies, setCompanies] = useState<CompanyProps[]>([]);
   const company = companies.filter(x => x.id === Number(id));
 
   function backPage() {

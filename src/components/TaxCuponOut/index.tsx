@@ -1,10 +1,11 @@
+import { Link, useHistory, useLocation } from 'react-router-dom';
+
 import sum_nfeImg from '../../assets/sum_nfe.svg';
 import sum_cfopImg from '../../assets/sum_cfop.svg';
 import sum_pis_cofinsImg from '../../assets/sum_pis_cofins.svg';
 import arrow_backImg from '../../assets/arrow_back.svg';
 
 import { Container, Content } from './styles'
-import { Link, useHistory, useLocation } from 'react-router-dom';
 
 export function TaxCuponOut() {
 

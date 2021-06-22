@@ -1,19 +1,11 @@
 import { FormEvent, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
 import { api } from '../../services/api';
+import { CfopProps } from '../../@types';
 
 import arrow_backImg from '../../assets/arrow_back.svg';
 
 import { Container, Content } from './styles';
-
-interface CfopProps {
-  cfop: string,
-  total_accounting: number,
-  total_icms_base: number,
-  total_icms_value: number,
-  total_icms_free_value: number,
-  total_icms_other_value: number
-}
 
 export function ListCFOP() {
 
@@ -22,12 +14,10 @@ export function ListCFOP() {
   }
 
   const query = useQuery();
-
   const customer_id = query.get('id');
   const type = query.get('type');
 
   const [cfop, setCfop] = useState<CfopProps[]>([]);
-
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
 
@@ -47,9 +37,7 @@ export function ListCFOP() {
 
   const startDateTimestamp = new Date(startDate).getTime();
   const endDateTimestamp = new Date(endDate).getTime();
-
   const endDateToDate = new Date(endDateTimestamp + 86400000);
-
   const endDateDay = endDateToDate.getUTCDate().toString().padStart(2, '0');
   const endDateMonth = (endDateToDate.getUTCMonth() + 1).toString().padStart(2, '0');
   const endDateYear = endDateToDate.getUTCFullYear().toString();

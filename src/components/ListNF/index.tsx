@@ -2,55 +2,12 @@ import { FormEvent, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
 import { InvoiceModal } from '../InvoiceModal';
 import { api } from '../../services/api';
+import { InvoiceProductsProps, InvoicesProps } from '../../@types';
 
 import arrow_backImg from '../../assets/arrow_back.svg';
 import viewImg from '../../assets/view.svg';
 
 import { Container, Content } from './styles';
-
-interface InvoicesProps {
-  id: number,
-  access_key: string,
-  cofins_base: number,
-  cofins_value: number,
-  customer: {
-    name: string,
-  }
-  date_departure: Date,
-  date_issue: Date,
-  discount_value: number,
-  expenses_value: number,
-  icms_base: number,
-  icms_value: number,
-  invoice_value: number,
-  ipi_base: number,
-  ipi_value: number,
-  model: string,
-  number: number,
-  pis_base: number,
-  pis_value: number,
-  safe_value: number,
-  serie: string,
-  shipping_value: number,
-  sticms_base: number,
-  sticms_value: number,
-  total_product: number,
-  type_movement: string,
-  type_record: string
-}
-
-interface InvoiceProductsProps {
-  id: number,
-  product_id: number,
-  invoice_id: number,
-  description: string,
-  ncm: string,
-  cfop: string,
-  cest: string,
-  quantity: number,
-  price_total: number,
-  price_unitary: number
-}
 
 export function ListNF() {
 
@@ -59,16 +16,13 @@ export function ListNF() {
   }
 
   const query = useQuery();
-
   const customer_id = query.get('id');
   const type = query.get('type');
 
   const [invoices, setInvoices] = useState<InvoicesProps[]>([]);
   const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] = useState(false);
-  
   const [invoiceModal, setInvoiceModal] = useState<InvoicesProps>({} as InvoicesProps);
   const [productsModal, setProductsModal] = useState<InvoiceProductsProps[]>([]);
-
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
 
@@ -98,9 +52,7 @@ export function ListNF() {
 
   const startDateTimestamp = new Date(startDate).getTime();
   const endDateTimestamp = new Date(endDate).getTime();
-
   const endDateToDate = new Date(endDateTimestamp + 86400000);
-    
   const endDateDay = endDateToDate.getUTCDate().toString().padStart(2, '0');
   const endDateMonth = (endDateToDate.getUTCMonth() + 1).toString().padStart(2, '0');
   const endDateYear = endDateToDate.getUTCFullYear().toString();

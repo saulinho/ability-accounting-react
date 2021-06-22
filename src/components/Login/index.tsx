@@ -1,21 +1,8 @@
 import { FormEvent, useState } from "react";
 import { api } from "../../services/api";
+import { LoginProps, UserInputProps } from "../../@types";
+
 import { Container, FormLoginStyle } from "./styles";
-
-
-interface LoginStatusProps {
-  loggedInStatus: string,
-  user: {}
-}
-
-interface UserInputProps {
-  email: string,
-  password: string,
-}
-
-interface LoginProps {
-  handleSuccessfulAuth: (data: LoginStatusProps) => void
-}
 
 export function Login(props: LoginProps) {
 

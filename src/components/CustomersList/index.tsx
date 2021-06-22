@@ -1,15 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-
 import { api } from '../../services/api';
+import { CompanyProps } from '../../@types';
 
 import { Container, Content } from './styles'
-
-interface CompanyProps {
-  id: number,
-  name: string,
-  number: number
-}
 
 export function CustomersList() {
 
@@ -50,14 +44,14 @@ export function CustomersList() {
           <tbody>
             {companies.map((company) => (
               <tr key={company.id} onClick={() => handleCustomerClick(company)}>
-                  <td className="cpnj">
-                    {
-                      company.number
-                        .toString()
-                        .replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5")
-                    }
-                  </td>
-                  <td>{company.name}</td>
+                <td className="cpnj">
+                  {
+                    company.number
+                      .toString()
+                      .replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5")
+                  }
+                </td>
+                <td>{company.name}</td>
               </tr>
             ))}
           </tbody>
