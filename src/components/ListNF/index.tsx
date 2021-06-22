@@ -1,12 +1,12 @@
 import { FormEvent, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
-import { Container, Content } from './styles';
 import { InvoiceModal } from '../InvoiceModal';
+import { api } from '../../services/api';
 
 import arrow_backImg from '../../assets/arrow_back.svg';
 import viewImg from '../../assets/view.svg';
 
-import { api } from '../../services/api';
+import { Container, Content } from './styles';
 
 interface InvoicesProps {
   id: number,
@@ -39,6 +39,19 @@ interface InvoicesProps {
   type_record: string
 }
 
+interface InvoiceProductsProps {
+  id: number,
+  product_id: number,
+  invoice_id: number,
+  description: string,
+  ncm: string,
+  cfop: string,
+  cest: string,
+  quantity: number,
+  price_total: number,
+  price_unitary: number
+}
+
 export function ListNF() {
 
   function useQuery() {
@@ -52,7 +65,10 @@ export function ListNF() {
 
   const [invoices, setInvoices] = useState<InvoicesProps[]>([]);
   const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] = useState(false);
+  
   const [invoiceModal, setInvoiceModal] = useState<InvoicesProps>({} as InvoicesProps);
+  const [productsModal, setProductsModal] = useState<InvoiceProductsProps[]>([]);
+
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
 
@@ -62,38 +78,33 @@ export function ListNF() {
     history.goBack();
   }
 
-  function handleOpenNewTransactionModal(data: InvoicesProps) {
+  function handleOpenNewTransactionModal(invoice: InvoicesProps, products: InvoiceProductsProps[]) {
     setIsNewTransactionModalOpen(true);
-    setInvoiceModal(data)
+    setInvoiceModal(invoice);
+    setProductsModal(products);
   }
 
   function handleCloseNewTransactionModal() {
     setIsNewTransactionModalOpen(false);
   }
 
-  function handleSubmitDateInterval(event: FormEvent){
+  function handleSubmitDateInterval(event: FormEvent) {
     event.preventDefault();
+    if (!startDate || !endDate || startDateTimestamp > endDateTimestamp) {
+      return alert("Data Incorreta!")
+    }
     getInvoices()
   }
 
-  const endDateConvert = endDate.split('-').map((x => +x));
+  const startDateTimestamp = new Date(startDate).getTime();
+  const endDateTimestamp = new Date(endDate).getTime();
 
-  const endDatetoNumber = endDateConvert.map((x,i) => {
-    if (i === 2) {
-        x++
-    }
-    return x
-  });
-
-  const endDateTimeStamp = Date.parse(endDatetoNumber.toString());
-
-  const endDateDate = new Date(endDateTimeStamp);
-
-  const endDateDay = endDateDate.getDate().toString().padStart(2,'0');
-  const endDateMonth = (endDateDate.getMonth() + 1 ).toString().padStart(2,'0');
-  const endDateYear = endDateDate.getFullYear().toString()
-
-  const endDateFormated = (endDateYear + '-' + endDateMonth + '-' + endDateDay)
+  const endDateToDate = new Date(endDateTimestamp + 86400000);
+    
+  const endDateDay = endDateToDate.getUTCDate().toString().padStart(2, '0');
+  const endDateMonth = (endDateToDate.getUTCMonth() + 1).toString().padStart(2, '0');
+  const endDateYear = endDateToDate.getUTCFullYear().toString();
+  const endDateFormated = (endDateYear + '-' + endDateMonth + '-' + endDateDay);
 
   async function getInvoices() {
     await api
@@ -107,6 +118,7 @@ export function ListNF() {
       })
       .then(response => {
         setInvoices(response.data.invoices)
+        setProductsModal(response.data.products)
       })
       .catch(err => console.log(err));
   }
@@ -190,7 +202,7 @@ export function ListNF() {
                       .format(invoice.invoice_value)
                   }
                 </td>
-                <td onClick={() => handleOpenNewTransactionModal(invoice)}>
+                <td onClick={() => handleOpenNewTransactionModal(invoice, productsModal)}>
                   <img src={viewImg} alt="Visualizar NFe" />
                 </td>
               </tr>
@@ -198,7 +210,7 @@ export function ListNF() {
           </tbody>
         </table>
       </Content>
-      <InvoiceModal dataInvoice={invoiceModal} isOpen={isNewTransactionModalOpen} onRequestClose={handleCloseNewTransactionModal} />
+      <InvoiceModal dataInvoice={invoiceModal} dataProducts={productsModal} isOpen={isNewTransactionModalOpen} onRequestClose={handleCloseNewTransactionModal} />
 
     </Container>
   );
