@@ -1,8 +1,6 @@
-import { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 
 import imgClose from '../../assets/close.svg';
-import { api } from '../../services/api';
 
 import { Container } from './styles';
 
@@ -54,25 +52,13 @@ interface NewTransactionModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
   dataInvoice: InvoicesProps
+  dataProducts: InvoiceProductsProps[]
 
 }
 
-export function InvoiceModal({ isOpen, onRequestClose, dataInvoice }: NewTransactionModalProps) {
+export function InvoiceModal({ isOpen, onRequestClose, dataInvoice, dataProducts }: NewTransactionModalProps) {
 
-  const [products, setProducts] = useState<InvoiceProductsProps[]>([]);
-
-  useEffect(() => {
-    api
-      .get('invoice_products')
-      .then(response => {
-        setProducts(response.data.invoice_products)
-      })
-      .catch(err => console.log(err));
-
-  }, [])
-
-
-  const invoice_products = products.filter(product => product.invoice_id === dataInvoice.id)
+  const invoice_products = dataProducts.filter(product => product.invoice_id === dataInvoice.id)
 
   return (
     <Modal
