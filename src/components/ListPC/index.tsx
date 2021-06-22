@@ -116,7 +116,10 @@ export function ListPC() {
                   name="check"
                   id='pis'
                   value='PIS'
-                  onChange={event => setCheck(event.target.value)}
+                  onChange={event => {
+                    setCheck(event.target.value);
+                    setCofins([]);
+                  }}
                 />
                 <span className="checkmark"></span>
               </label>
@@ -127,7 +130,10 @@ export function ListPC() {
                   name="check"
                   id='cofins'
                   value='COFINS'
-                  onChange={event => setCheck(event.target.value)}
+                  onChange={event => {
+                    setCheck(event.target.value);
+                    setPis([]);
+                  }}
                 />
                 <span className="checkmark"></span>
               </label>
@@ -147,7 +153,7 @@ export function ListPC() {
           </thead>
           <tbody>
             {
-              pis
+              check === 'PIS'
                 ?
                   pis.map((pis, i) => (
                     <tr key={i}>
