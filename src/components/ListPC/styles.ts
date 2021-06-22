@@ -63,6 +63,133 @@ export const Content = styled.section`
   justify-content: center;
   margin-top: 4rem;
 
+  .form-date-selector {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-pis-cofins-selector {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  form{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    margin-bottom: 2rem;
+
+    div {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      span {
+        margin-right: 1rem;
+      }
+    }
+
+    input {
+      font-size: 1rem;
+      font-weight: 600;
+      line-height: 1rem;
+      text-align: center;
+      background-color: var(--text-white);
+      border: 0;
+      border-radius: 0.5rem;
+      box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+      padding: 0.2rem 0.2rem;
+      outline: none;
+      margin-right: 1rem;
+    }
+
+    .container {
+      display: block;
+      position: relative;
+      padding: 0 1.75rem;
+      cursor: pointer;
+      font-size: 1rem;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      margin-left: 1rem;
+    }
+
+    .container input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .checkmark {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 1.5rem;
+      width: 1.5rem;
+      background-color: #eee;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+    }
+
+    .container:hover input ~ .checkmark {
+      background-color: #ccc;
+    }
+
+    .container input:checked ~ .checkmark {
+      background-color: var(--green);
+    }
+
+    .checkmark:after {
+      content: "";
+      position: absolute;
+      display: none;
+    }
+
+    .container input:checked ~ .checkmark:after {
+      display: block;
+    }
+
+    .container .checkmark:after {
+      top: 0.5rem;
+      left: 0.5rem;
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 50%;
+      background: white;
+    }
+
+    button[type="submit"] {
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1rem;
+
+      background: var(--green);
+      border: 0;
+      border-radius: 0.5rem;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+      padding: 0.5rem 2rem;
+
+      transition: filter 0.2s;
+
+      &:hover {
+        filter: brightness(0.9);
+      }
+    }
+  }
+  
+  @media (max-width: 720px) {
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
   table {
     width: 100%;
     border-spacing: 0 0.25rem;
@@ -75,7 +202,7 @@ export const Content = styled.section`
       tr:last-child th:last-child { border-bottom-right-radius: 0.25rem; }
 
       th {
-        font-size: 1.25rem;
+        font-size: 1.1rem;
         font-weight: 700;
         line-height: 2rem;
         color: var(--text-dark);
@@ -101,12 +228,27 @@ export const Content = styled.section`
         line-height: 1.5rem;
         font-weight: 400;
         background: var(--list-pair);
+
         
         &:nth-child(odd) {
           background: var(--list-odd);
         }
+
+        td {
+          transition: filter 0.2s;
+  
+          img {
+            vertical-align: middle;
+            width: 1.25rem;
+            cursor: pointer;
+  
+            &:hover {
+              filter: opacity(0.8);
+            }
+          }
+        }
       }
     }
   }
-    
+  
 `
