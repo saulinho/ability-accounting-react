@@ -32,7 +32,6 @@ export function ListPC() {
 
   function handleSubmitDateInterval(event: FormEvent) {
     event.preventDefault();
-    console.log(startDate, endDate, startDateTimestamp, endDateTimestamp, check);
     if (!startDate || !endDate || startDateTimestamp > endDateTimestamp) {
       return alert("Data Incorreta");
     }
