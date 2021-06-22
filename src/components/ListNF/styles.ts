@@ -116,10 +116,13 @@ export const Content = styled.section`
     }
   }
   
-  @media (max-width: 720px) {
+  @media (max-width: 940px) {
     form {
       display: flex;
       flex-direction: column;
+    }
+    h3 {
+      margin-bottom: 1rem;
     }
   }
 
@@ -135,10 +138,11 @@ export const Content = styled.section`
       tr:last-child th:last-child { border-bottom-right-radius: 0.25rem; }
 
       th {
-        font-size: 1.25rem;
+        font-size: 1.2rem;
         font-weight: 700;
         line-height: 2rem;
         color: var(--text-dark);
+        padding: 0 1rem;
 
         background: var(--list-odd);
 
@@ -146,6 +150,20 @@ export const Content = styled.section`
           width: 30px;
           height: 30px;
           vertical-align: middle;
+        }
+      }
+
+      @media (max-width: 768px) {
+        th {
+          font-size: 0.9rem;
+          padding: 0 0.7rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        th {
+          font-size: 0.9rem;
+          padding: 0 0.7rem;
         }
       }
     }

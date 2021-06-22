@@ -183,10 +183,24 @@ export const Content = styled.section`
     }
   }
   
-  @media (max-width: 720px) {
+  @media (max-width: 940px) {
     form {
       display: flex;
       flex-direction: column;
+
+      button {
+        margin-top: 1rem;
+      }
+    }
+
+    h3 {
+      margin-bottom: 1rem;
+    }
+
+    .form-pis-cofins-selector {
+      h3 {
+        margin-top: 1rem;
+      }
     }
   }
 
@@ -206,6 +220,7 @@ export const Content = styled.section`
         font-weight: 700;
         line-height: 2rem;
         color: var(--text-dark);
+        padding: 0 1rem;
 
         background: var(--list-odd);
 
