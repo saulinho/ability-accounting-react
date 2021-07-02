@@ -68,6 +68,7 @@ export interface InvoiceProductsProps {
   ncm: string,
   cfop: string,
   cest: string,
+  icms_cst_csosn: string,
   quantity: number,
   price_total: number,
   price_unitary: number

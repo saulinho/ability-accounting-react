@@ -335,6 +335,7 @@ export function InvoiceModal({ isOpen, onRequestClose, dataInvoice, dataProducts
                 <th>NCM</th>
                 <th>CFOP</th>
                 <th>CEST</th>
+                <th>CST</th>
                 <th>QNT</th>
                 <th>VLR UNIT</th>
                 <th>VLR TOTAL</th>
@@ -349,6 +350,7 @@ export function InvoiceModal({ isOpen, onRequestClose, dataInvoice, dataProducts
                   <td>{product.ncm}</td>
                   <td>{product.cfop}</td>
                   <td>{product.cest}</td>
+                  <td>{product.icms_cst_csosn}</td>
                   <td>{product.quantity}</td>
                   <td>
                     {
