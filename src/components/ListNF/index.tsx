@@ -82,7 +82,7 @@ export function ListNF() {
           <img onClick={backPage} src={arrow_backImg} alt="Voltar" />
         </button>
 
-        <h1>NOTAS FISCAIS</h1>
+        <h1>NOTAS FISCAIS {type == "invoicein" ? "Entrada" : "Saída"}</h1>
       </div>
 
       <Content>
@@ -119,7 +119,7 @@ export function ListNF() {
               <th>Série</th>
               <th>Modelo</th>
               <th>Emissão</th>
-              <th>Saída</th>
+              <th>{type == "invoicein" ? "Entrada" : "Saída"}</th>
               <th>Valor Total</th>
               <th>Visualizar</th>
             </tr>
