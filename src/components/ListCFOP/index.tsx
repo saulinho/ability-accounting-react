@@ -1,5 +1,6 @@
 import { FormEvent, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
+import Loader from 'react-loader-spinner';
 import { api } from '../../services/api';
 import { CfopProps } from '../../@types';
 
@@ -17,6 +18,8 @@ export function ListCFOP() {
   const customer_id = query.get('id');
   const type = query.get('type');
 
+  const [loading, setLoading] = useState(false);
+
   const [cfop, setCfop] = useState<CfopProps[]>([]);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
@@ -32,6 +35,7 @@ export function ListCFOP() {
     if (!startDate || !endDate || startDateTimestamp > endDateTimestamp) {
       return alert("Data Incorreta!")
     }
+    setLoading(true);
     getCfop()
   }
 
@@ -54,6 +58,7 @@ export function ListCFOP() {
         }
       })
       .then(response => {
+        setLoading(false);
         setCfop(response.data.cfop_products)
       })
       .catch(err => console.log(err));
@@ -99,7 +104,8 @@ export function ListCFOP() {
         <table>
           <thead>
             <tr>
-              <th>Fiscal</th>
+              <th>CST</th>
+              <th>CFOP</th>
               <th>Vlr Contábil</th>
               <th>Base Cálculo</th>
               <th>Imp. Debitado</th>
@@ -111,6 +117,7 @@ export function ListCFOP() {
           <tbody>
             {cfop.map((cfop, i) => (
               <tr key={i}>
+                <td>{cfop.icms_cst_csosn}</td>
                 <td>{cfop.cfop}</td>
                 <td>
                   {
@@ -160,7 +167,22 @@ export function ListCFOP() {
               </tr>
             ))}
           </tbody>
+
         </table>
+
+        { loading
+          ? 
+            <Loader
+              type="ThreeDots"
+              color="#1FCD64"
+              height={50}
+              width={50}
+            />
+          :
+            <p>Não há mais itens para serem exibidos</p>
+        }
+         
+
       </Content>
 
     </Container>

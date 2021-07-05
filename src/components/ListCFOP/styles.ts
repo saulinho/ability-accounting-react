@@ -127,6 +127,10 @@ export const Content = styled.section`
     }
   }
 
+  p.loading {
+    text-align: center;
+  }
+
   table {
     width: 100%;
     border-spacing: 0 0.25rem;
