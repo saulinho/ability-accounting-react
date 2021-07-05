@@ -6,6 +6,7 @@ import { CofinsProps, PisProps } from '../../@types';
 import arrow_backImg from '../../assets/arrow_back.svg';
 
 import { Container, Content } from './styles';
+import Loader from 'react-loader-spinner';
 
 export function ListPC() {
 
@@ -23,6 +24,8 @@ export function ListPC() {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
 
+  const [loading, setLoading] = useState(false);
+
   const history = useHistory();
 
   function backPage() {
@@ -38,6 +41,7 @@ export function ListPC() {
     if (!check) {
       return alert("Selecione PIS ou COFINS!");
     }
+    setLoading(true);
     getPisCofins()
   }
 
@@ -62,10 +66,12 @@ export function ListPC() {
       })
       .then(response => {
         if(check === 'PIS') {
-        setPis(response.data.pis_products)
+          setLoading(false);
+          setPis(response.data.pis_products)
         } else
         if(check === 'COFINS') {
-        setCofins(response.data.cofins_products)
+          setLoading(false);
+          setCofins(response.data.cofins_products)
         }
       })
       .catch(err => console.log(err));
@@ -225,6 +231,18 @@ export function ListPC() {
             
           </tbody>
         </table>
+
+        { loading
+          ? 
+            <Loader
+              type="ThreeDots"
+              color="#1FCD64"
+              height={50}
+              width={50}
+            />
+          :
+            <p>Não há mais itens para serem exibidos</p>
+        }
       </Content>
 
     </Container>
