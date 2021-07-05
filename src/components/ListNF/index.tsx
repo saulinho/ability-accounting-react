@@ -51,6 +51,7 @@ export function ListNF() {
     if (!startDate || !endDate || startDateTimestamp > endDateTimestamp) {
       return alert("Data Incorreta!")
     }
+    setInvoices([]);
     setLoading(true);
     getInvoices()
   }
@@ -64,6 +65,8 @@ export function ListNF() {
   const endDateFormated = (endDateYear + '-' + endDateMonth + '-' + endDateDay);
 
   async function getInvoices() {
+    setLoading(true);
+
     await api
       .get('invoices', {
         params: {
@@ -146,7 +149,7 @@ export function ListNF() {
               } else if (invoice.status === 'C') {
                 style = 'canceled'
                 status = 'Cancelada'
-              } else if (invoice.status === 'U') {
+              } else if (invoice.status === 'I') {
                 style = 'unused'
                 status = 'Inutilizada'
               }
