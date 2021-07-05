@@ -8,6 +8,7 @@ import arrow_backImg from '../../assets/arrow_back.svg';
 import viewImg from '../../assets/view.svg';
 
 import { Container, Content } from './styles';
+import Loader from 'react-loader-spinner';
 
 export function ListNF() {
 
@@ -25,6 +26,9 @@ export function ListNF() {
   const [productsModal, setProductsModal] = useState<InvoiceProductsProps[]>([]);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
+
+  const [loading, setLoading] = useState(false);
+
 
   const history = useHistory();
 
@@ -47,6 +51,7 @@ export function ListNF() {
     if (!startDate || !endDate || startDateTimestamp > endDateTimestamp) {
       return alert("Data Incorreta!")
     }
+    setLoading(true);
     getInvoices()
   }
 
@@ -69,6 +74,7 @@ export function ListNF() {
         }
       })
       .then(response => {
+        setLoading(false);
         setInvoices(response.data.invoices)
         setProductsModal(response.data.products)
       })
@@ -82,7 +88,7 @@ export function ListNF() {
           <img onClick={backPage} src={arrow_backImg} alt="Voltar" />
         </button>
 
-        <h1>NOTAS FISCAIS {type == "invoicein" ? "ENTRADA" : "SAÍDA"}</h1>
+        <h1>NOTAS FISCAIS {type === "invoicein" ? "ENTRADA" : "SAÍDA"}</h1>
       </div>
 
       <Content>
@@ -115,19 +121,39 @@ export function ListNF() {
         <table>
           <thead>
             <tr>
+              <th>Status</th>
               <th>Número</th>
               <th>Série</th>
               <th>Modelo</th>
               <th>Emissão</th>
-              <th>{type == "invoicein" ? "Entrada" : "Saída"}</th>
+              <th>{type === "invoicein" ? "Entrada" : "Saída"}</th>
               <th>Valor Total</th>
               <th>Visualizar</th>
             </tr>
           </thead>
 
           <tbody>
-            {invoices.map((invoice) => (
+            {invoices.map((invoice) => {
+              let style;
+              let status;
+
+              if (invoice.status === 'A') {
+                style = 'authorized'
+                status = 'Autorizada'
+              } else if ( invoice.status === 'D') {
+                style = 'denied'
+                status = 'Denegada'
+              } else if (invoice.status === 'C') {
+                style = 'canceled'
+                status = 'Cancelada'
+              } else if (invoice.status === 'U') {
+                style = 'unused'
+                status = 'Inutilizada'
+              }
+
+              return (              
               <tr key={invoice.id}>
+                <td className={style}>{status}</td>
                 <td>{invoice.number}</td>
                 <td>{invoice.serie}</td>
                 <td>{invoice.model}</td>
@@ -158,9 +184,20 @@ export function ListNF() {
                   <img src={viewImg} alt="Visualizar NFe" />
                 </td>
               </tr>
-            ))}
+            )})}
           </tbody>
         </table>
+        { loading
+          ? 
+            <Loader
+              type="ThreeDots"
+              color="#1FCD64"
+              height={50}
+              width={50}
+            />
+          :
+            <p>Não há mais itens para serem exibidos</p>
+        }
       </Content>
       <InvoiceModal dataInvoice={invoiceModal} dataProducts={productsModal} isOpen={isNewTransactionModalOpen} onRequestClose={handleCloseNewTransactionModal} />
 

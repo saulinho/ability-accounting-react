@@ -198,6 +198,25 @@ export const Content = styled.section`
             }
           }
         }
+        .authorized {
+          color: white;
+          background-color: #00C142;
+        }
+
+        .unused {
+          color: white;
+          background-color: #0070C0;
+        }
+
+        .canceled {
+          color: white;
+          background-color: #C00000;
+        }
+
+        .denied {
+          color: white;
+          background-color: #C100BA;
+        }
       }
     }
   }
