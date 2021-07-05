@@ -31,6 +31,7 @@ export interface CompanyProps {
 
 export interface InvoicesProps {
   id: number,
+  status: string,
   access_key: string,
   cofins_base: number,
   cofins_value: number,
@@ -82,6 +83,7 @@ export interface NewTransactionModalProps {
 }
 
 export interface CfopProps {
+  icms_cst_csosn: string,
   cfop: string,
   total_accounting: number,
   total_icms_base: number,
