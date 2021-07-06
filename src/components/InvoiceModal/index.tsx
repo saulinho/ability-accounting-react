@@ -1,13 +1,36 @@
+import { useEffect, useState } from 'react';
 import Modal from 'react-modal';
-import { NewTransactionModalProps } from '../../@types';
+import { Tab, TabList, TabPanel, Tabs, } from 'react-tabs';
+import { NewTransactionModalProps, CfopProps } from '../../@types';
 
 import imgClose from '../../assets/close.svg';
+import { api } from '../../services/api';
 
 import { Container } from './styles';
 
 export function InvoiceModal({ isOpen, onRequestClose, dataInvoice, dataProducts }: NewTransactionModalProps) {
 
   const invoice_products = dataProducts.filter(product => product.invoice_id === dataInvoice.id)
+
+  const [cfopProducts, setCfopProducts] = useState<CfopProps[]>([]);
+
+  useEffect(() => {
+    async function getCfopProducts() {
+      const data = dataInvoice.id;
+
+      await api.get('cfop_products', {
+        params: {
+          invoice_id: data
+        }
+      }).then(response => {
+        setCfopProducts(response.data);
+      });
+    }
+
+    getCfopProducts();
+  }, [dataInvoice])
+
+
 
   return (
     <Modal
@@ -325,56 +348,135 @@ export function InvoiceModal({ isOpen, onRequestClose, dataInvoice, dataProducts
 
           </table>
 
-          <h2>PRODUTOS</h2>
+          <Tabs>
+            <TabList>
+              <Tab>PRODUTOS</Tab>
+              <Tab>CFOP</Tab>
+            </TabList>
 
-          <table className="product-table">
-            <thead>
-              <tr>
-                <th>CÓDIGO</th>
-                <th>DESCRIÇÃO</th>
-                <th>NCM</th>
-                <th>CFOP</th>
-                <th>CEST</th>
-                <th>CST</th>
-                <th>QNT</th>
-                <th>VLR UNIT</th>
-                <th>VLR TOTAL</th>
-              </tr>
-            </thead>
+            <TabPanel>
+              <table className="product-table">
+                <thead>
+                  <tr>
+                    <th>CÓDIGO</th>
+                    <th>DESCRIÇÃO</th>
+                    <th>NCM</th>
+                    <th>CFOP</th>
+                    <th>CEST</th>
+                    <th>CST</th>
+                    <th>QNT</th>
+                    <th>VLR UNIT</th>
+                    <th>VLR TOTAL</th>
+                  </tr>
+                </thead>
 
-            <tbody>
-              {invoice_products.map((product) => (
-                <tr key={product.id}>
-                  <td>{product.product_id}</td>
-                  <td>{product.description}</td>
-                  <td>{product.ncm}</td>
-                  <td>{product.cfop}</td>
-                  <td>{product.cest}</td>
-                  <td>{product.icms_cst_csosn}</td>
-                  <td>{product.quantity}</td>
-                  <td>
-                    {
-                      new Intl.NumberFormat('pt-BR', {
-                        style: 'currency',
-                        currency: 'BRL',
-                      })
-                        .format(product.price_unitary)
-                    }
-                  </td>
-                  <td>
-                    {
-                      new Intl.NumberFormat('pt-BR', {
-                        style: 'currency',
-                        currency: 'BRL',
-                      })
-                        .format(product.price_total)
-                    }
-                  </td>
-                </tr>
-              ))}
+                <tbody>
+                  {invoice_products.map((product) => (
+                    <tr key={product.id}>
+                      <td>{product.product_id}</td>
+                      <td>{product.description}</td>
+                      <td>{product.ncm}</td>
+                      <td>{product.cfop}</td>
+                      <td>{product.cest}</td>
+                      <td>{product.icms_cst_csosn}</td>
+                      <td>{product.quantity}</td>
+                      <td>
+                        {
+                          new Intl.NumberFormat('pt-BR', {
+                            style: 'currency',
+                            currency: 'BRL',
+                          })
+                            .format(product.price_unitary)
+                        }
+                      </td>
+                      <td>
+                        {
+                          new Intl.NumberFormat('pt-BR', {
+                            style: 'currency',
+                            currency: 'BRL',
+                          })
+                            .format(product.price_total)
+                        }
+                      </td>
+                    </tr>
+                  ))}
 
-            </tbody>
-          </table>
+                </tbody>
+              </table>
+            </TabPanel>
+
+            <TabPanel>
+              <table className="product-table">
+                <thead>
+                  <tr>
+                    <th>CST</th>
+                    <th>CFOP</th>
+                    <th>Vlr Contábil</th>
+                    <th>Base Cálculo</th>
+                    <th>Imp. Debitado</th>
+                    <th>Isentas/Não Trib.</th>
+                    <th>Outras</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {cfopProducts.map((cfop, i) => (
+                    <tr key={i}>
+                      <td>{cfop.icms_cst_csosn}</td>
+                      <td>{cfop.cfop}</td>
+                      <td>
+                        {
+                          new Intl.NumberFormat('pt-BR', {
+                            style: 'currency',
+                            currency: 'BRL',
+                          })
+                            .format(cfop.total_accounting)
+                        }
+                      </td>
+                      <td>
+                        {
+                          new Intl.NumberFormat('pt-BR', {
+                            style: 'currency',
+                            currency: 'BRL',
+                          })
+                            .format(cfop.total_icms_base)
+                        }
+                      </td>
+                      <td>
+                        {
+                          new Intl.NumberFormat('pt-BR', {
+                            style: 'currency',
+                            currency: 'BRL',
+                          })
+                            .format(cfop.total_icms_value)
+                        }
+                      </td>
+                      <td>
+                        {
+                          new Intl.NumberFormat('pt-BR', {
+                            style: 'currency',
+                            currency: 'BRL',
+                          })
+                            .format(cfop.total_icms_free_value)
+                        }
+                      </td>
+                      <td>
+                        {
+                          new Intl.NumberFormat('pt-BR', {
+                            style: 'currency',
+                            currency: 'BRL',
+                          })
+                            .format(cfop.total_icms_other_value)
+                        }
+                      </td>
+                    </tr>
+                  ))}
+
+                </tbody>
+              </table>
+            </TabPanel>
+
+          </Tabs>
 
         </section>
 
