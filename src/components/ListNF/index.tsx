@@ -65,8 +65,6 @@ export function ListNF() {
   const endDateFormated = (endDateYear + '-' + endDateMonth + '-' + endDateDay);
 
   async function getInvoices() {
-    setLoading(true);
-
     await api
       .get('invoices', {
         params: {

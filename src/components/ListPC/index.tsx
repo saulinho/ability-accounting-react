@@ -42,6 +42,8 @@ export function ListPC() {
       return alert("Selecione PIS ou COFINS!");
     }
     setLoading(true);
+    setPis([]);
+    setCofins([]);
     getPisCofins()
   }
 

@@ -36,6 +36,7 @@ export function ListCFOP() {
       return alert("Data Incorreta!")
     }
     setLoading(true);
+    setCfop([]);
     getCfop()
   }
 
