@@ -265,5 +265,24 @@ export const Content = styled.section`
       }
     }
   }
+
+  div.total-values {
+    p {
+      text-align: center;
+    }
+
+    table {
+      text-align: center;
+
+      thead {
+
+          th {
+            font-size: 1rem;
+            line-height: 1.5rem;
+          }
+      }
+    }
+      
+  }
   
 `

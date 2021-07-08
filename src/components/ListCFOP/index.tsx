@@ -39,6 +39,7 @@ export function ListCFOP() {
     }
     setLoading(true);
     setCfop([]);
+    setTotalCfop([]);
     getCfop()
   }
 
@@ -251,7 +252,6 @@ export function ListCFOP() {
           </div>
 
         }
-
 
       </Content>
 
