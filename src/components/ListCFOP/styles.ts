@@ -131,6 +131,8 @@ export const Content = styled.section`
     text-align: center;
   }
 
+  
+
   table {
     width: 100%;
     border-spacing: 0 0.25rem;
@@ -191,6 +193,25 @@ export const Content = styled.section`
         }
       }
     }
+  }
+
+  div.total-values {
+    p {
+      text-align: center;
+    }
+
+    table {
+      text-align: center;
+
+      thead {
+
+          th {
+            font-size: 1rem;
+            line-height: 1.5rem;
+          }
+      }
+    }
+      
   }
   
 `
