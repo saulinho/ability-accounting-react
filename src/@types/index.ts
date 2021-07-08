@@ -107,9 +107,21 @@ export interface PisProps {
   total_pis_value: number
 }
 
+export interface TotalPisProps {
+  total_total_accounting: number,
+  total_total_pis_base: number,
+  total_total_pis_value: number
+}
+
 export interface CofinsProps {
   cofins_cst: string,
   total_accounting: number,
   total_cofins_base: number,
   total_cofins_value: number
+}
+
+export interface TotalCofinsProps {
+  total_total_accounting: number,
+  total_total_cofins_base: number,
+  total_total_cofins_value: number
 }
