@@ -92,6 +92,14 @@ export interface CfopProps {
   total_icms_other_value: number
 }
 
+export interface TotalCfopProps {
+  total_total_accounting: number,
+  total_total_icms_base: number,
+  total_total_icms_value: number,
+  total_total_icms_free_value: number,
+  total_total_icms_other_value: number
+}
+
 export interface PisProps {
   pis_cst: string,
   total_accounting: number,

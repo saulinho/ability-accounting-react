@@ -2,7 +2,7 @@ import { FormEvent, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
 import Loader from 'react-loader-spinner';
 import { api } from '../../services/api';
-import { CfopProps } from '../../@types';
+import { CfopProps, TotalCfopProps } from '../../@types';
 
 import arrow_backImg from '../../assets/arrow_back.svg';
 
@@ -21,6 +21,8 @@ export function ListCFOP() {
   const [loading, setLoading] = useState(false);
 
   const [cfop, setCfop] = useState<CfopProps[]>([]);
+  const [total_cfop, setTotalCfop] = useState<TotalCfopProps[]>([]);
+
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
 
@@ -60,6 +62,7 @@ export function ListCFOP() {
       })
       .then(response => {
         setLoading(false);
+        setTotalCfop(response.data.cfop_total);
         setCfop(response.data.cfop_products)
       })
       .catch(err => console.log(err));
@@ -171,18 +174,84 @@ export function ListCFOP() {
 
         </table>
 
-        { loading
-          ? 
-            <Loader
-              type="ThreeDots"
-              color="#1FCD64"
-              height={50}
-              width={50}
-            />
+        {loading
+          ?
+          <Loader
+            type="ThreeDots"
+            color="#1FCD64"
+            height={50}
+            width={50}
+          />
           :
+          <div className='total-values'>
             <p>Não há mais itens para serem exibidos</p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Total Contábil</th>
+                  <th>Total Base Cálculo</th>
+                  <th>Total Imp. Debitado</th>
+                  <th>Total Isentas/Não Trib.</th>
+                  <th>Total Outras</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {total_cfop.map((cfop, i) => (
+                  <tr key={i}>
+                    <td>
+                      {
+                        new Intl.NumberFormat('pt-BR', {
+                          style: 'currency',
+                          currency: 'BRL',
+                        })
+                          .format(cfop.total_total_accounting)
+                      }
+                    </td>
+                    <td>
+                      {
+                        new Intl.NumberFormat('pt-BR', {
+                          style: 'currency',
+                          currency: 'BRL',
+                        })
+                          .format(cfop.total_total_icms_base)
+                      }
+                    </td>
+                    <td>
+                      {
+                        new Intl.NumberFormat('pt-BR', {
+                          style: 'currency',
+                          currency: 'BRL',
+                        })
+                          .format(cfop.total_total_icms_value)
+                      }
+                    </td>
+                    <td>
+                      {
+                        new Intl.NumberFormat('pt-BR', {
+                          style: 'currency',
+                          currency: 'BRL',
+                        })
+                          .format(cfop.total_total_icms_free_value)
+                      }
+                    </td>
+                    <td>
+                      {
+                        new Intl.NumberFormat('pt-BR', {
+                          style: 'currency',
+                          currency: 'BRL',
+                        })
+                          .format(cfop.total_total_icms_other_value)
+                      }
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
         }
-         
+
 
       </Content>
 
